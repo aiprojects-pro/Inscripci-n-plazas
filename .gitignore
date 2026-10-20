@@ -1,0 +1,5 @@
+# Local Moodle and test artifacts
+/phpunit.xml
+/phpunit.xml.dist.local
+/moodledata/
+.DS_Store
