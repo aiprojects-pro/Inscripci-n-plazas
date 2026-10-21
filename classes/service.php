@@ -100,8 +100,8 @@ final class service {
             }
             $issued = (int)($entry['issued'] ?? 0);
             if ($files && $doc['maxage']) {
-                $today = usergetmidnight(time());
-                if (!$issued || $issued < $today - $doc['maxage'] * DAYSECS || $issued > time()) {
+                if (!document_date::accepted($issued, (int)$doc['maxage'], time(),
+                        \core_date::get_user_timezone_object())) {
                     throw new \moodle_exception('documentdate', 'enrol_orderedapply', '', $doc['label']);
                 }
             }

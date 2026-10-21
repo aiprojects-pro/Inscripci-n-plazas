@@ -8,8 +8,8 @@
  */
 defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'enrol_orderedapply';
-$plugin->version = 2026102100;
+$plugin->version = 2026102101;
 $plugin->requires = 2026042001;
 $plugin->supported = [502, 502];
 $plugin->maturity = MATURITY_BETA;
-$plugin->release = '0.2.1-beta';
+$plugin->release = '0.2.2-beta';
