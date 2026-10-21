@@ -89,7 +89,10 @@ class enrol_orderedapply_plugin extends enrol_plugin {
             $mform->setType('docconsent_' . $i, PARAM_TEXT);
             $mform->setDefault('docconsent_' . $i, $doc['consultation']);
             foreach (['doclabel_', 'docmode_', 'docrequired_', 'docage_', 'docconsent_'] as $prefix) {
-                $mform->hideIf($prefix . $i, 'documentcount', 'lt', $i + 1);
+                // QuickForm supports equality, not a numeric "lt" dependency.
+                for ($count = 0; $count <= $i; $count++) {
+                    $mform->hideIf($prefix . $i, 'documentcount', 'eq', $count);
+                }
             }
             $mform->hideIf('docconsent_' . $i, 'docmode_' . $i, 'neq', 'choice');
             $mform->hideIf('docage_' . $i, 'docmode_' . $i, 'eq', 'alternatives');
@@ -106,7 +109,9 @@ class enrol_orderedapply_plugin extends enrol_plugin {
                 $mform->setType($prefix . 'consent_' . $i, PARAM_TEXT);
                 $mform->setDefault($prefix . 'consent_' . $i, $option['consultation']);
                 foreach (['label_', 'age_', 'consent_'] as $field) {
-                    $mform->hideIf($prefix . $field . $i, 'documentcount', 'lt', $i + 1);
+                    for ($count = 0; $count <= $i; $count++) {
+                        $mform->hideIf($prefix . $field . $i, 'documentcount', 'eq', $count);
+                    }
                     $mform->hideIf($prefix . $field . $i, 'docmode_' . $i, 'neq', 'alternatives');
                 }
             }

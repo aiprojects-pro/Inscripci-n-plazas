@@ -87,15 +87,26 @@ class application extends \moodleform {
 
     public static function documents(array $data): array {
         $result = [];
+        // Moodle omits disabled filemanagers from POST when the consultation route hides them.
+        // Discover the document from its route or variant as well as its draft file field.
+        $keys = [];
         foreach ($data as $field => $value) {
-            if (str_starts_with($field, 'file_')) {
-                $key = substr($field, 5);
-                $variant = $data['variant_' . $key] ?? '';
-                $suffix = $variant !== '' ? $key . '_' . $variant : $key;
-                $result[$key] = ['draftid' => (int)$value, 'variant' => $variant,
-                    'method' => $data['method_' . $suffix] ?? 'attachment',
-                    'authorised' => !empty($data['authorised_' . $suffix]), 'issued' => $data['issued_' . $suffix] ?? 0];
+            if (str_starts_with($field, 'file_')) { $keys[substr($field, 5)] = true; }
+            if (str_starts_with($field, 'variant_')) { $keys[substr($field, 8)] = true; }
+            if (str_starts_with($field, 'method_')) {
+                $key = substr($field, 7);
+                if (!preg_match('/^(.*)_option[12]$/', $key, $matches) ||
+                        !array_key_exists('variant_' . $matches[1], $data)) {
+                    $keys[$key] = true;
+                }
             }
+        }
+        foreach (array_keys($keys) as $key) {
+            $variant = $data['variant_' . $key] ?? '';
+            $suffix = $variant !== '' ? $key . '_' . $variant : $key;
+            $result[$key] = ['draftid' => (int)($data['file_' . $key] ?? 0), 'variant' => $variant,
+                'method' => $data['method_' . $suffix] ?? 'attachment',
+                'authorised' => !empty($data['authorised_' . $suffix]), 'issued' => $data['issued_' . $suffix] ?? 0];
         }
         return $result;
     }

@@ -7,7 +7,7 @@ raiz del repositorio es la carpeta `orderedapply`; no debe quedar otra carpeta
 ## Compatibilidad
 
 - Moodle 5.2.x (`$plugin->supported = [502, 502]`).
-- Version del plugin: 0.2.0-beta (`2026102001`).
+- Version del plugin: 0.2.1-beta (`2026102100`).
 - PHP y motor de base de datos compatibles con la instalacion de Moodle.
 
 No instalar directamente en produccion sin haberlo probado antes con la misma
@@ -57,5 +57,6 @@ de la base de datos. Despues de copiar la nueva version, ejecutar siempre
 la misma copia; no mezclar una version anterior del codigo con una base de
 datos actualizada.
 
-La version 0.2.0-beta anade requisitos documentales alternativos sin modificar
-las solicitudes existentes ni sus documentos.
+La version 0.2.1-beta corrige el envio de autorizaciones de consulta sin
+adjunto y la visibilidad del editor de requisitos. No modifica las solicitudes
+existentes ni sus documentos.

@@ -445,4 +445,21 @@ final class service_test extends \advanced_testcase {
         $this->assertNull($uploadcourse);
         $this->assertStringContainsString('file_employment', $html);
     }
+    public function test_consultation_post_without_hidden_filemanager_is_retained(): void {
+        $input = form\application::documents(['method_residence' => 'consult', 'authorised_residence' => 1]);
+        $this->assertSame('consult', $input['residence']['method']);
+        $this->assertTrue($input['residence']['authorised']);
+        $this->assertSame(0, $input['residence']['draftid']);
+    }
+    public function test_alternative_consultation_without_filemanager_validates(): void {
+        $this->employment_schema();
+        $user = $this->getDataGenerator()->create_user();
+        $this->setUser($user);
+        $input = form\application::documents(['variant_employment' => 'option2',
+            'method_employment_option2' => 'consult', 'authorised_employment_option2' => 1]);
+        $metadata = service::validate_documents($this->instance, $user->id, $input);
+        $this->assertSame('consult', $metadata['employment']['method']);
+        $this->assertSame('option2', $metadata['employment']['variant']);
+        $this->assertTrue($metadata['employment']['authorised']);
+    }
 }

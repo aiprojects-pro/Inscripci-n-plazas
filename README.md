@@ -1,6 +1,12 @@
 # Inscripción y plazas — enrol_orderedapply
 
-Versión 0.2.0-beta. Complemento independiente de matriculación para Moodle 5.2.1 o superior dentro de la rama 5.2. Interfaces en español e inglés. Licencia GPL v3 o posterior.
+Versión 0.2.1-beta. Complemento independiente de matriculación para Moodle 5.2.1 o superior dentro de la rama 5.2. Interfaces en español e inglés. Licencia GPL v3 o posterior.
+
+## Corrección 0.2.1 pendiente de aceptación
+
+La prueba web del 21 de octubre detectó que la autorización de consulta del padrón no se convertía correctamente cuando Moodle omitía el campo de archivo oculto. Esta versión conserva la vía de consulta y el consentimiento aunque no exista un campo de archivo en el envío. También sustituye una condición de visibilidad no admitida en el editor de documentos por condiciones de igualdad compatibles.
+
+Se añaden dos regresiones de Moodle. La conversión se ha comprobado con siete verificaciones aisladas en PHP y la sintaxis es correcta. La suite completa de Moodle no se ha podido repetir porque el servicio Docker local no está disponible. Los resultados de 33 pruebas y 92 comprobaciones corresponden a 0.2.0, no certifican esta corrección. Instalar primero en pruebas, repetir la suite completa y el circuito web con adjuntos y autorizaciones antes de abrir una convocatoria.
 
 Permite incorporar cursos futuros y reutilizar el mismo instalador en otras plataformas Moodle compatibles. No contiene nombres de ayuntamientos, identificadores de cursos ni credenciales. No depende de Enrolment Request ni modifica su código.
 
